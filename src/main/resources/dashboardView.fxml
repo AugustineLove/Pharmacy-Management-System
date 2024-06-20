@@ -3,6 +3,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -13,13 +14,13 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="783.0" prefWidth="1530.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pharmacymanagementsystem.controllers.dashboardView">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="783.0" prefWidth="1530.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pharmacymanagementsystem.dashboardView">
    <children>
       <AnchorPane>
          <children>
             <BorderPane layoutX="186.0" layoutY="93.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <top>
-                  <AnchorPane prefHeight="45.0" styleClass="top-nav" stylesheets="@style/dashboardView.css" BorderPane.alignment="CENTER">
+                  <AnchorPane prefHeight="45.0" styleClass="top-nav" stylesheets="@../../../../../pms/semester-project/pharmacyManagementSystem/src/main/resources/style/dashboardView.css" BorderPane.alignment="CENTER">
                      <children>
                         <AnchorPane layoutX="96.0" layoutY="5.0" prefHeight="41.0" prefWidth="1100.0" styleClass="stack-top-nav" stylesheets="@style/dashboardView.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -37,7 +38,7 @@
                <left>
                   <AnchorPane prefHeight="554.0" prefWidth="248.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane layoutX="6.0" layoutY="104.0" prefHeight="554.4" prefWidth="248.0" styleClass="left-pane" stylesheets="@style/dashboardView.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane layoutX="-0.19999999999999996" layoutY="0.8" onDragDetected="#addPurchase" prefHeight="554.4" prefWidth="248.0" styleClass="left-pane" stylesheets="@style/dashboardView.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.19999999999999996" AnchorPane.rightAnchor="1.8000000000000114" AnchorPane.topAnchor="0.8">
                            <children>
                               <FontAwesomeIcon fill="WHITE" glyphName="USER" layoutX="14.0" layoutY="103.0" size="5em" />
                               <Label fx:id="username" layoutX="73.0" layoutY="73.0" text="Admin User Name" textFill="WHITE">
@@ -51,10 +52,10 @@
                                  </font>
                               </Label>
                               <Line endX="123.99998474121094" endY="-1.52587890625E-5" layoutX="113.0" layoutY="122.0" startX="-100.0" stroke="WHITE" />
-                              <Button fx:id="drugs_btn" layoutX="12.0" layoutY="155.0" mnemonicParsing="false" onAction="#showPage" prefHeight="26.0" prefWidth="223.0" styleClass="left-panebtn" stylesheets="@style/dashboardView.css" text="Drugs" />
-                              <Button fx:id="purchases_btn" layoutX="12.0" layoutY="197.0" mnemonicParsing="false" onAction="#showPage" prefHeight="26.0" prefWidth="223.0" styleClass="left-panebtn" stylesheets="@style/dashboardView.css" text="Purchases" />
-                              <Button layoutX="12.0" layoutY="239.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="223.0" styleClass="left-panebtn" stylesheets="@style/dashboardView.css" text="Suppliier" />
-                              <Button layoutX="12.0" layoutY="283.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="223.0" styleClass="left-panebtn" stylesheets="@style/dashboardView.css" text="Sales" />
+                              <Button fx:id="drugs_btn" layoutX="12.0" layoutY="155.0" mnemonicParsing="false" onAction="#showPage" prefHeight="26.0" prefWidth="223.0" styleClass="left-panebtn" stylesheets="@../../../../../pms/semester-project/pharmacyManagementSystem/src/main/resources/style/dashboardView.css" text="Drugs" />
+                              <Button fx:id="purchases_btn" layoutX="12.0" layoutY="195.0" mnemonicParsing="false" onAction="#showPage" prefHeight="26.0" prefWidth="223.0" styleClass="left-panebtn" stylesheets="@../../../../../pms/semester-project/pharmacyManagementSystem/src/main/resources/style/dashboardView.css" text="Purchases" />
+                              <Button layoutX="12.0" layoutY="238.0" mnemonicParsing="false" onAction="#showPage" prefHeight="26.0" prefWidth="223.0" styleClass="left-panebtn" stylesheets="@../../../../../pms/semester-project/pharmacyManagementSystem/src/main/resources/style/dashboardView.css" text="Suppliier" />
+                              <Button layoutX="12.0" layoutY="281.0" mnemonicParsing="false" onAction="#showPage" prefHeight="26.0" prefWidth="223.0" styleClass="left-panebtn" stylesheets="@../../../../../pms/semester-project/pharmacyManagementSystem/src/main/resources/style/dashboardView.css" text="Sales" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -65,87 +66,66 @@
                      <children>
                         <AnchorPane fx:id="purchases_page" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <AnchorPane layoutX="14.0" layoutY="11.0" prefHeight="722.0" prefWidth="410.0" stylesheets="@style/dashboardView.css">
+                              <AnchorPane layoutX="14.0" layoutY="11.0" prefHeight="722.0" prefWidth="410.0" stylesheets="@../../../../../pms/semester-project/pharmacyManagementSystem/src/main/resources/style/dashboardView.css">
                                  <styleClass>
                                     <String fx:value="history-leftpane" />
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <Label layoutX="32.0" layoutY="142.0" prefHeight="20.0" prefWidth="120.0" text="Purchase Name:">
+                                    <Label layoutX="19.0" layoutY="213.0" prefHeight="20.0" prefWidth="87.0" text="Drug Name:">
                                        <font>
                                           <Font name="Poppins Regular" size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="purchases_searchName" layoutX="168.0" layoutY="129.0" prefHeight="50.0" prefWidth="200.0" />
-                                    <Label layoutX="55.0" layoutY="202.0" prefHeight="19.0" prefWidth="50.0" text="Name:">
+                                    <TextField fx:id="purchases_addDrugName" layoutX="168.0" layoutY="200.0" prefHeight="50.0" prefWidth="200.0" />
+                                    <Label layoutX="42.0" layoutY="288.0" prefHeight="19.0" prefWidth="62.0" text="Quantity:">
                                        <font>
                                           <Font name="Poppins Regular" size="13.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="purchases_drugName" layoutX="168.0" layoutY="197.0" prefHeight="32.0" prefWidth="182.0" text="Name">
+                                    <Label layoutX="64.0" layoutY="362.0" prefHeight="19.0" prefWidth="38.0" text="Price:">
                                        <font>
                                           <Font name="Poppins Regular" size="13.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="42.0" layoutY="258.0" prefHeight="19.0" prefWidth="59.0" text="Supplier:">
+                                    <Label layoutX="64.0" layoutY="428.0" prefHeight="19.0" prefWidth="33.0" text="Date:">
                                        <font>
                                           <Font name="Poppins Regular" size="13.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="purchases_supplierName" layoutX="168.0" layoutY="252.0" prefHeight="32.0" prefWidth="182.0" text="Name">
-                                       <font>
-                                          <Font name="Poppins Regular" size="13.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="64.0" layoutY="309.0" prefHeight="19.0" prefWidth="38.0" text="Date:">
-                                       <font>
-                                          <Font name="Poppins Regular" size="13.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="purchases_date" layoutX="169.0" layoutY="302.0" prefHeight="37.0" prefWidth="182.0" text="Name">
-                                       <font>
-                                          <Font name="Poppins Regular" size="13.0" />
-                                       </font>
-                                    </Label>
-                                    <Button fx:id="purchases_searchBtn" layoutX="161.0" layoutY="575.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="98.0" styleClass="addDrugbtn" stylesheets="@style/dashboardView.css" text="Search" />
+                                    <Button fx:id="purchases_searchBtn" layoutX="91.0" layoutY="575.0" mnemonicParsing="false" onAction="#searchPurchaseByDate" prefHeight="42.0" prefWidth="98.0" styleClass="addDrugbtn" stylesheets="@../../../../../pms/semester-project/pharmacyManagementSystem/src/main/resources/style/dashboardView.css" text="Search" />
+                                    <DatePicker fx:id="purchases_addDrugDate" layoutX="181.0" layoutY="425.0" />
+                                    <TextField fx:id="purchases_addDrugQuantity" layoutX="169.0" layoutY="273.0" prefHeight="50.0" prefWidth="200.0" />
+                                    <TextField fx:id="purchases_addDrugPrice" layoutX="170.0" layoutY="347.0" prefHeight="50.0" prefWidth="200.0" />
+                                    <Button fx:id="purchases_addBtn" layoutX="205.0" layoutY="575.0" mnemonicParsing="false" onAction="#addPurchase" prefHeight="42.0" prefWidth="98.0" styleClass="addDrugbtn" stylesheets="@../../../../../pms/semester-project/pharmacyManagementSystem/src/main/resources/style/dashboardView.css" text="Add" />
                                  </children>
                               </AnchorPane>
-                              <AnchorPane layoutX="433.0" layoutY="11.0" prefHeight="722.0" prefWidth="841.0" stylesheets="@style/dashboardView.css">
+                              <AnchorPane layoutX="433.0" layoutY="11.0" prefHeight="722.0" prefWidth="841.0" stylesheets="@../../../../../pms/semester-project/pharmacyManagementSystem/src/main/resources/style/dashboardView.css">
                                  <styleClass>
                                     <String fx:value="history-leftpane" />
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <TableView layoutX="2.0" layoutY="56.0" prefHeight="662.0" prefWidth="837.0">
-                                      <columns>
-                                        <TableColumn fx:id="purchases_col_purchaseID" prefWidth="196.26666259765625" text="Purchase Id" />
-                                        <TableColumn fx:id="purchases_col_drugName" prefWidth="134.13330078125" text="Drug Name" />
-                                          <TableColumn fx:id="purchases_col_quantity" prefWidth="102.93353271484375" text="Quantity" />
-                                          <TableColumn fx:id="purchases_col_amount" prefWidth="178.66650390625" text="Amount" />
-                                          <TableColumn fx:id="purchases_col_supplierId" prefWidth="143.7332763671875" text="Supplier Id" />
-                                          <TableColumn fx:id="purchases_col_date" prefWidth="192.2667236328125" text="Date" />
-                                      </columns>
-                                    </TableView>
                                     <Label layoutX="352.0" layoutY="17.0" text="Drug Purchase History">
                                        <font>
                                           <Font name="Poppins Regular" size="18.0" />
                                        </font>
                                     </Label>
+                                    <TableView fx:id="purchaseHistoryTable" layoutX="14.0" layoutY="44.0" prefHeight="666.0" prefWidth="814.0">
+                                      <columns>
+                                        <TableColumn fx:id="purchaseDrugName" prefWidth="163.99993896484375" text="Name" />
+                                        <TableColumn fx:id="purchaseDrugQuantity" prefWidth="236.00006103515625" text="Quantity" />
+                                          <TableColumn fx:id="purchaseDrugPrice" prefWidth="236.00006103515625" text="Price" />
+                                          <TableColumn fx:id="purchaseDrugDate" prefWidth="236.00006103515625" text="Date" />
+                                      </columns>
+                                    </TableView>
                                  </children>
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="drugs_page" layoutX="135.0" layoutY="138.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="drugs_page" layoutX="135.0" layoutY="138.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <TableView fx:id="drugsTable" layoutX="10.0" layoutY="335.6" onMouseClicked="#displaySelectedDrug" onMouseDragOver="#displaySelectedDrug" prefHeight="400.0" prefWidth="1228.0">
-                                 <columns>
-                                    <TableColumn fx:id="addDrug_col_id" prefWidth="88.0" text="ID" />
-                                    <TableColumn fx:id="addDrug_col_name" prefWidth="178.4000244140625" text="Name" />
-                                    <TableColumn fx:id="addDrug_col_description" prefWidth="274.39996337890625" text="Description" />
-                                    <TableColumn fx:id="addDrug_col_stock" prefWidth="93.60009765625" text="Stock" />
-                                    <TableColumn fx:id="addDrug_col_suppliers" prefWidth="163.20001220703125" text="Suppliers" />
-                                 </columns>
-                              </TableView>
+
                               <AnchorPane layoutX="11.0" layoutY="11.0" prefHeight="723.0" prefWidth="1270.0" styleClass="page" stylesheets="@style/dashboardView.css">
                                  <children>
                                     <Label layoutX="113.0" layoutY="76.0" text="Drug Id:" />
@@ -190,14 +170,13 @@
                                           <Font name="Poppins Regular" size="17.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="addDrug_search" layoutX="22.0" layoutY="86.0" promptText="     search" />
                                     <FontAwesomeIcon glyphName="SEARCH" layoutX="27.0" layoutY="102.0" />
                                     <Label layoutX="545.0" layoutY="11.0" text="Drugs and Details" textFill="WHITE">
                                        <font>
                                           <Font name="Poppins Regular" size="17.0" />
                                        </font>
                                     </Label>
-                                    <TableView fx:id="drugsTable" layoutY="43.2" onMouseClicked="#displaySelectedDrug" onMouseDragOver="#displaySelectedDrug" prefHeight="358.0" prefWidth="1273.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="43.0">
+                                    <TableView fx:id="drugsTable" layoutY="43.2" onMouseClicked="#displaySelectedDrug" prefHeight="358.0" prefWidth="1273.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="43.0">
                                        <columns>
                                           <TableColumn fx:id="addDrug_col_id" prefWidth="88.0" text="ID" />
                                           <TableColumn fx:id="addDrug_col_name" prefWidth="178.4000244140625" text="Name" />
@@ -206,9 +185,9 @@
                                           <TableColumn fx:id="addDrug_col_suppliers" prefWidth="397.06671142578125" text="Suppliers" />
                                        </columns>
                                     </TableView>
-                                    <Button fx:id="addDrug_searchBtn" layoutX="178.0" layoutY="9.0" mnemonicParsing="false" onAction="#searchByID" prefHeight="26.0" prefWidth="55.0" styleClass="addDrug_searchBtn" stylesheets="@style/dashboardView.css" text="ID" textFill="WHITE" />
+                                    <Button fx:id="addDrug_searchBtn" layoutX="178.0" layoutY="9.0" mnemonicParsing="false" onAction="#searchByID" prefHeight="26.0" prefWidth="55.0" styleClass="addDrug_searchBtn" stylesheets="@../../../../../pms/semester-project/pharmacyManagementSystem/src/main/resources/style/dashboardView.css" text="ID" textFill="WHITE" />
                                     <Button fx:id="addDrug_searchBtn1" layoutX="296.0" layoutY="9.0" mnemonicParsing="false" onAction="#clearSearchResult" prefHeight="21.0" prefWidth="100.0" styleClass="addDrug_searchBtn" stylesheets="@style/dashboardView.css" text="Clear" textFill="WHITE" />
-                                    <Button fx:id="addDrug_nameSearch" layoutX="236.0" layoutY="9.0" mnemonicParsing="false" onAction="#searchByNS" prefHeight="26.0" prefWidth="55.0" styleClass="addDrug_searchBtn" stylesheets="@style/dashboardView.css" text="N/S" textFill="WHITE" />
+                                    <Button fx:id="addDrug_nameSearch" layoutX="236.0" layoutY="9.0" mnemonicParsing="false" onAction="#searchByNS" prefHeight="26.0" prefWidth="55.0" styleClass="addDrug_searchBtn" stylesheets="@../../../../../pms/semester-project/pharmacyManagementSystem/src/main/resources/style/dashboardView.css" text="N/S" textFill="WHITE" />
                                  </children>
                               </AnchorPane>
                               <TextField fx:id="addDrug_search" layoutX="40.0" layoutY="347.0" prefHeight="26.0" prefWidth="142.0" promptText="Search" />

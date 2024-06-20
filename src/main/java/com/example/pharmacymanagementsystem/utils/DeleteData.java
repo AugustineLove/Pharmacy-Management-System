@@ -1,6 +1,6 @@
 package com.example.pharmacymanagementsystem.utils;
 
-import com.example.pharmacymanagementsystem.controllers.dashboardView;
+import com.example.pharmacymanagementsystem.dashboardView;
 import databaseConnection.MyDatabase;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;

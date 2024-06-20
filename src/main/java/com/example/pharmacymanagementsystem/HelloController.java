@@ -5,12 +5,12 @@ import java.sql.*;
 
 import com.example.pharmacymanagementsystem.models.Admin;
 import com.example.pharmacymanagementsystem.utils.AlertDialogue;
+import com.example.pharmacymanagementsystem.utils.ErrorHandler;
 import databaseConnection.MyDatabase;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -36,6 +36,9 @@ public class HelloController {
     private TextField username_field;
 
     MyDatabase myDatabase = new MyDatabase();
+    ErrorHandler myErrorHandler = new ErrorHandler();
+
+
 
     //this function logs in the admin and displays the dashboard screen
     public void loginAdmin() throws SQLException, ClassNotFoundException {
@@ -75,9 +78,10 @@ public class HelloController {
 
             }
 
+        } catch (SQLException e){
+            myErrorHandler.getSQLException(e);
         } catch (Exception e){
-            System.out.println("Error message: "+e.getMessage() + "error" + e.getCause());
-
+            System.out.println("Error message: " +e.getMessage()+ "Error cause: " + e.getCause());
         }
     }
 

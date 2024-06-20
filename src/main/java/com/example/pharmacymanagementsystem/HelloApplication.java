@@ -1,5 +1,6 @@
 package com.example.pharmacymanagementsystem;
 
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import databaseConnection.MyDatabase;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,13 +13,13 @@ import java.io.IOException;
 import java.sql.*;
 
 public class HelloApplication extends Application {
-
+    MyDatabase myDatabase = new MyDatabase();
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/views/signIn.fxml"));
-
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/style/loginStyle.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/style/dashboardView.css").toExternalForm());
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setTitle("Pharmacy Management System");
         stage.setScene(scene);
@@ -26,9 +27,9 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args)  throws SQLException, ClassNotFoundException {
+        MyDatabase myDatabase = new MyDatabase();
         try {
             //creating an instance of my database configurations
-            MyDatabase myDatabase = new MyDatabase();
 
             //print admin username to test code
             String query = "SELECT * FROM Admin";

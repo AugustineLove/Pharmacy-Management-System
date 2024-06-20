@@ -1,42 +1,34 @@
 package com.example.pharmacymanagementsystem.utils;
 
-import com.example.pharmacymanagementsystem.controllers.dashboardView;
+import com.example.pharmacymanagementsystem.dashboardView;
 import databaseConnection.MyDatabase;
-import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 import java.sql.*;
 
 public class AddData {
+    AlertDialogue alertDialogue = new AlertDialogue();
+    MyDatabase myDatabase = new MyDatabase();
+    ErrorHandler myErrorHandler = new ErrorHandler();
 
     public void addDrugData(TextField drugId, TextField drugName, TextField drugDescription, TextField stock, TextField suppliers, String newDrugID) throws SQLException, ClassNotFoundException {
-        MyDatabase myDatabase = new MyDatabase();
         String query = "INSERT INTO DRUGS " + "(NAME, DESCRIPTION, STOCK, SUPPLIERS)" +"VALUES(?,?,?,?)";
 
         try (Connection con = myDatabase.getConnection()){
 
             if(drugId.getText().isEmpty() || drugName.getText().isEmpty() || drugDescription.getText().isEmpty()
             || stock.getText().isEmpty() || suppliers.getText().isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Please provide value for all fields");
-                alert.showAndWait();
+                alertDialogue.showErrorAlert("Please provide value for all fields");
             }
-
           else{
-
               String checkQuery = "SELECT DRUGID FROM DRUGS WHERE DRUGID = '"+  drugId.getText()+"'";
 
                 Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 ResultSet rs = st.executeQuery(checkQuery);
 
                 if(rs.next()){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Drug "+drugName.getText()+ " already exists");
-                    alert.showAndWait();
+                    alertDialogue.showErrorAlert("Drug "+drugName.getText()+ " already exists");
                 }
                 PreparedStatement ps = con.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
@@ -53,16 +45,42 @@ public class AddData {
                 dashboardView.newUpdateListOfDrugs = retrieveData.getAllDrugs();
                 retrieveData.getAllDrugs();
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Record added successfully!");
-                alert.showAndWait();
-
+                alertDialogue.showSuccessAlert("Record added successfully!");
             }
 
+        } catch (SQLException e) {
+            myErrorHandler.getSQLException(e);
         }
     }
 
+    public void addDrugPurchase(TextField drugName, TextField drugQuantity, TextField drugPrice, DatePicker datePicker) throws SQLException, ClassNotFoundException {
 
+        try(Connection con = myDatabase.getConnection()){
+
+            if(drugName.getText().isEmpty() || drugQuantity.getText().isEmpty() || drugPrice.getText().isEmpty() || datePicker.getValue() == null){
+                alertDialogue.showErrorAlert("Please provide value for all fields");
+            }
+
+            String addPurchase = "INSERT INTO PURCHASE (NAME, QUANTITY, PRICE, DATE) VALUES (?,?,?,?)";
+
+            PreparedStatement ps = con.prepareStatement(addPurchase);
+            ps.setString(1, drugName.getText());
+            ps.setString(2, drugQuantity.getText());
+            ps.setString(3, drugPrice.getText());
+            ps.setString(4, datePicker.getValue().toString());
+            ps.executeUpdate();
+
+            AppConstants appConstants = new AppConstants();
+
+            appConstants.resetPInputRecords(drugName, drugQuantity, drugPrice, datePicker);
+            RetrieveData retrieveData = new RetrieveData();
+            dashboardView.updateListOfPurchases = retrieveData.getAllDrugPurchases();
+            retrieveData.getAllDrugPurchases();
+
+            alertDialogue.showSuccessAlert("Record added successfully!");
+
+        } catch (SQLException exception){
+            myErrorHandler.getSQLException(exception);
+        }
+    }
 }

@@ -1,6 +1,10 @@
 package com.example.pharmacymanagementsystem.utils;
 
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 public class AppConstants
 {
@@ -11,5 +15,12 @@ public class AppConstants
         drugDescription.setText("");
         stock.setText("");
         suppliers.setText("");
+    }
+
+    public void resetPInputRecords(TextField drugName, TextField quantity, TextField price, DatePicker datePicker){
+        drugName.setText("");
+        quantity.setText("");
+        price.setText("");
+        datePicker.setValue(LocalDate.now());
     }
 }

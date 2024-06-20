@@ -1,7 +1,8 @@
-package com.example.pharmacymanagementsystem.controllers;
+package com.example.pharmacymanagementsystem;
 
 import com.example.pharmacymanagementsystem.models.Admin;
 import com.example.pharmacymanagementsystem.models.Drug;
+import com.example.pharmacymanagementsystem.models.Purchase;
 import com.example.pharmacymanagementsystem.utils.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import javafx.event.ActionEvent;
 
@@ -22,6 +24,11 @@ public class dashboardView {
 
     @FXML
     private TableView<Drug> drugsTable;
+
+    @FXML
+    private TableView<Purchase> purchaseHistoryTable;
+
+
     @FXML
     private TableColumn<Drug, String> addDrug_col_description;
 
@@ -89,10 +96,16 @@ public class dashboardView {
     private TableColumn<?, ?> purchases_col_supplierId;
 
     @FXML
-    private Label purchases_date;
+    private DatePicker purchases_addDrugDate;
 
     @FXML
-    private Label purchases_drugName;
+    private TextField purchases_addDrugName;
+
+    @FXML
+    private TextField purchases_addDrugPrice;
+
+    @FXML
+    private TextField purchases_addDrugQuantity;
 
     @FXML
     private Button purchases_searchBtn;
@@ -106,21 +119,43 @@ public class dashboardView {
     @FXML
     private Label username;
 
+
+    @FXML
+    private TableColumn<Purchase, String> purchaseDrugDate;
+
+    @FXML
+    private TableColumn<Purchase, String> purchaseDrugName;
+
+    @FXML
+    private TableColumn<Purchase, String> purchaseDrugPrice;
+
+    @FXML
+    private TableColumn<Purchase, String> purchaseDrugQuantity;
+
+
+
+    public static ObservableList<Purchase> updateListOfPurchases;
     public static ObservableList<Drug> newUpdateListOfDrugs;
     public static ObservableList<Drug> binarySearchResultList;
+    AlertDialogue alertDialogue = new AlertDialogue();
+    RetrieveData retrieveData = new RetrieveData();
+    SearchAlgorithms bS = new SearchAlgorithms();
 
     public void getUserName(){
         username.setText(Admin.adminUsername);
     }
 
     public void getDrugRecords() throws SQLException, ClassNotFoundException {
-        RetrieveData retrieveData = new RetrieveData();
+
         newUpdateListOfDrugs = retrieveData.getAllDrugs();
 
     }
+    public void getHistoryRecords() throws SQLException, ClassNotFoundException{
+        updateListOfPurchases = retrieveData.getAllDrugPurchases();
+    }
 
     public void searchByID() throws SQLException, ClassNotFoundException {
-        SearchAlgorithms bS = new SearchAlgorithms();
+
 
         try{
             Drug searchResult =  bS.binarySearch(newUpdateListOfDrugs, Integer.parseInt(addDrug_search.getText()));
@@ -128,13 +163,20 @@ public class dashboardView {
             showTableData(searchResultList);
         }
         catch (NumberFormatException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Wrong input type");
-            alert.showAndWait();
+            alertDialogue.showErrorAlert("Wrong input type");
         }
 
+    }
+
+    public  void searchPurchaseByDate() throws SQLException, ClassNotFoundException, ParseException {
+        try{
+            Purchase searchResult = bS.binarySearchPurchase(updateListOfPurchases, purchases_addDrugDate.getValue().toString());
+            ObservableList<Purchase> searchResultList = FXCollections.observableArrayList(searchResult);
+            showPurchaseTableData(searchResultList);
+
+        } catch (ParseException e){
+            System.out.println("Parse exception here: " + e);
+        }
     }
 
     public void searchByNS() throws SQLException, ClassNotFoundException {
@@ -143,6 +185,7 @@ public class dashboardView {
         System.out.println(searchResult);
         showTableData(searchResult);
     }
+
     public void clearSearchResult() throws SQLException, ClassNotFoundException {
         addDrug_search.setText("");
         showTableData(newUpdateListOfDrugs);
@@ -181,6 +224,17 @@ public class dashboardView {
         drugsTable.setItems(list);
     }
 
+    public void showPurchaseTableData(ObservableList<Purchase> list) throws SQLException, ClassNotFoundException {
+        RetrieveData retrieveData = new RetrieveData();
+
+
+        purchaseDrugName.setCellValueFactory(new PropertyValueFactory<>("drugName"));
+        purchaseDrugQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+        purchaseDrugPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
+        purchaseDrugDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        purchaseHistoryTable.setItems(list);
+    }
+
     public void displaySelectedDrug(){
         Drug newDrugs = drugsTable.getSelectionModel().getSelectedItem();
         int drugIndex = drugsTable.getSelectionModel().getSelectedIndex();
@@ -213,6 +267,7 @@ public class dashboardView {
         }
     }
 
+
     public void clearFormInput() throws SQLException, ClassNotFoundException{
         RetrieveData retrieveData = new RetrieveData();
         ObservableList<Drug> drugDataList = retrieveData.getAllDrugs();
@@ -238,13 +293,19 @@ public class dashboardView {
         showTableData(newUpdateListOfDrugs);
     }
 
+    public void addPurchase() throws SQLException, ClassNotFoundException {
+        AddData addData = new AddData();
+        addData.addDrugPurchase(purchases_addDrugName, purchases_addDrugQuantity, purchases_addDrugPrice, purchases_addDrugDate);
+        showPurchaseTableData(updateListOfPurchases);
+    }
+
 
     @FXML
     public void initialize() throws  SQLException, ClassNotFoundException{
         getUserName();
         getDrugRecords();
+        getHistoryRecords();
         showTableData(newUpdateListOfDrugs);
+        showPurchaseTableData(updateListOfPurchases);
     }
-
-
 }

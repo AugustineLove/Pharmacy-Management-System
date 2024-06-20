@@ -1,0 +1,90 @@
+
+
+.top-nav {
+    -fx-background-color: #ffff;
+    -fx-border-width: 4px, 4px, 2px, 4px;
+}
+
+. stack-top-nav{
+    -fx-background-color: #1D242E;
+    -fx-border-width: 2px, 4px, 8px, 4px;
+}
+
+.close {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+.close:hover{
+    -fx-background-color: #ff4747;
+}
+
+.left-pane {
+    -fx-background-color: #283342;
+
+}
+
+.left-panebtn{
+    -fx-background-color: #283342;
+    -fx-font-family: "Poppins";
+    -fx-font-size: 14px;
+    -fx-text-fill: #ffff;
+    -fx-cursor: hand;
+    -fx-alignment: center-left;
+}
+
+.page{
+    -fx-background-color: #fffdee;
+
+}
+.shadow{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 6, 0, 0,0);
+}
+.tablebehindpage{
+    -fx-background-color: #283342;
+}
+.addDrugbtn{
+    -fx-cursor: hand;
+    -fx-background-color: #283342;
+    -fx-text-fill: #ffff;
+}
+
+.addDrugbtn:hover {
+    -fx-background-color: #1cb801;
+}
+
+.clearDrugInputBtn{
+    -fx-cursor: hand;
+    -fx-background-color: #283342;
+    -fx-text-fill: #ffff;
+}
+
+.clearDrugInputBtn:hover {
+    -fx-background-color: #ff2727;
+}
+
+.addDrug_searchBtn{
+    -fx-background-color: #006bff;
+}
+
+.addDrug_searchBtn:hover{
+    -fx-background-color: #ffd500;
+    -fx-cursor: hand;
+}
+
+.addDrug_updateBtn{
+    -fx-cursor: hand;
+    -fx-background-color: #283342;
+    -fx-text-fill: #ffff;
+
+}
+.addDrug_updateBtn:hover {
+    -fx-background-color: #004dff;
+}
+
+.history-leftpane{
+    -fx-background-color: #ffff;
+}
+
+.textfield{
+    -fx-text-fill: #000000;
+}
