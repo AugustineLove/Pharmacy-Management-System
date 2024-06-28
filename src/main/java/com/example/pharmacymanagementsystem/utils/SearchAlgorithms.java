@@ -2,7 +2,9 @@ package com.example.pharmacymanagementsystem.utils;
 
 
 import com.example.pharmacymanagementsystem.models.Drug;
+import com.example.pharmacymanagementsystem.models.DrugAndSupplier;
 import com.example.pharmacymanagementsystem.models.Purchase;
+import com.example.pharmacymanagementsystem.models.Supplier;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
@@ -81,6 +83,44 @@ public class SearchAlgorithms {
         for (Purchase purchase : array) {
             if (Objects.equals(purchase.getDrugName().toLowerCase(), target.toLowerCase())) {
                 result.add(purchase);
+            }
+        }
+        return result;
+    }
+
+    public Supplier searchSupplierById(ObservableList<Supplier> array, int target) {
+        int low = 0;
+        int high = array.size() - 1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (Integer.parseInt(array.get(mid).getSupplierID()) == target) {
+                return array.get(mid);
+            }
+            else if( Integer.parseInt(array.get(mid).getSupplierID()) > target ){
+                high = mid - 1;
+            }
+            else {
+                low = mid + 1;
+            }
+        }
+        return null;
+    }
+
+    public ObservableList<Supplier> linearSearchSupplier(ObservableList<Supplier> array, String target){
+        ObservableList<Supplier> result = FXCollections.observableArrayList();
+        for (Supplier supplier : array){
+            if (Objects.equals(supplier.getSupplierName().toLowerCase(), target.toLowerCase())){
+                result.add(supplier);
+            }
+        }
+        return result;
+    }
+
+    public ObservableList<DrugAndSupplier> linearSearchDrugSupplier(ObservableList<DrugAndSupplier> array, String target){
+        ObservableList<DrugAndSupplier> result = FXCollections.observableArrayList();
+        for (DrugAndSupplier drugAndSupplier: array){
+            if (Objects.equals(drugAndSupplier.getSupplierLocation().toLowerCase(), target.toLowerCase())){
+                result.add(drugAndSupplier);
             }
         }
         return result;

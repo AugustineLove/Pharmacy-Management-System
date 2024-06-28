@@ -6,13 +6,15 @@ public class Drug {
     private String drugDescription;
     private String stock;
     private String suppliers;
+    private String supplierID;
 
-    public Drug(String drugID, String drugName, String drugDescription, String stock, String suppliers){
+    public Drug(String drugID, String drugName, String drugDescription, String stock, String suppliers, String supplierID){
         this.drugID = drugID;
         this.drugName = drugName;
         this.drugDescription = drugDescription;
         this.stock = stock;
         this.suppliers = suppliers;
+        this.supplierID = supplierID;
     }
 
     public String getDrugID(){
@@ -30,6 +32,9 @@ public class Drug {
     public String getSuppliers(){
         return this.suppliers;
     }
+    public String getSupplierID(){
+        return this.supplierID;
+    }
 
     public void setDrugID(String ID){
         this.drugID = ID;
@@ -45,6 +50,9 @@ public class Drug {
     }
     public void setSuppliers(String suppliers){
         this.suppliers = suppliers;
+    }
+    public void setSupplierID(String supplierID){
+        this.supplierID = supplierID;
     }
 
 }

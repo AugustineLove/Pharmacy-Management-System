@@ -2,6 +2,7 @@ package com.example.pharmacymanagementsystem.utils;
 
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import org.w3c.dom.Text;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -22,5 +23,18 @@ public class AppConstants
         quantity.setText("");
         price.setText("");
         datePicker.setValue(LocalDate.now());
+    }
+
+    public void resetSupplierInputRecords(TextField supplierId, TextField supplierName, TextField supplierLocation, TextField supplierPhone, String newSupplierID){
+        supplierId.setText(newSupplierID);
+        supplierName.setText("");
+        supplierLocation.setText("");
+        supplierPhone.setText("");
+    }
+
+    public void resetDrugSupplierRecords(TextField drugName, TextField supplierName, TextField supplierLocation){
+        drugName.setText("");
+        supplierName.setText("");
+        supplierLocation.setText("");
     }
 }

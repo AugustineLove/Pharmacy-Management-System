@@ -31,7 +31,7 @@ public class HelloApplication extends Application {
         try {
             //creating an instance of my database configurations
 
-            //print admin username to test code
+            //printing admin username to test code
             String query = "SELECT * FROM Admin";
             Statement st = myDatabase.getStatement();
             ResultSet rs = st.executeQuery(query);
@@ -42,7 +42,6 @@ public class HelloApplication extends Application {
         } catch (SQLException e){
             System.out.println(e);
         }
-
         launch();
     }
 

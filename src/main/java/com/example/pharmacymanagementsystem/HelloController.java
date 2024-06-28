@@ -46,7 +46,6 @@ public class HelloController {
 
         //get a connection to make a statements
         Connection con = myDatabase.getConnection();
-        con = myDatabase.getConnection();
         String query = "select * from admin WHERE username = ? and password = ?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -81,7 +80,7 @@ public class HelloController {
         } catch (SQLException e){
             myErrorHandler.getSQLException(e);
         } catch (Exception e){
-            System.out.println("Error message: " +e.getMessage()+ "Error cause: " + e.getCause());
+            System.out.println("Error message: " +e.getMessage()+ "Error cause: " + e.getCause() + e.getLocalizedMessage());
         }
     }
 
