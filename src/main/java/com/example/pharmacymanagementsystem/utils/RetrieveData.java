@@ -13,10 +13,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Random;
 
 public class RetrieveData {
@@ -24,11 +21,26 @@ public class RetrieveData {
     MyDatabase newsql = new MyDatabase();
     ErrorHandler myErrorHandler = new ErrorHandler();
 
+    boolean tableExists(Connection connection, String tableName) throws SQLException {
+        DatabaseMetaData meta = connection.getMetaData();
+        ResultSet resultSet = meta.getTables(null, null, tableName, new String[] {"TABLE"});
+        return resultSet.next();
+    }
+
     public ObservableList<Drug> getAllDrugs() throws SQLException, ClassNotFoundException {
         ObservableList<Drug> drugList = FXCollections.observableArrayList();
         String query = "SELECT * FROM DRUGS";
 
         try (Connection con = newsql.getConnection()){
+            boolean drugTableExists = tableExists(con, "DRUGS");
+
+
+            if(!drugTableExists){
+                String creatTable = "Create table DRUGS (drugID int primary key auto_increment, drugName varchar(100), drugDescription varchar(100), drugStock varchar(100), drugSupplier varchar(100), supplierId varchar(100))";
+                Statement statement = con.createStatement();
+                statement.executeUpdate(creatTable);
+            }
+
             PreparedStatement ps = con.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = ps.executeQuery();
 
@@ -56,6 +68,15 @@ public class RetrieveData {
         String query = "SELECT c.customerID, p.purchaseId, p.drugName, p.drugQuantity, p.drugPrice, p.purchaseDate FROM purchases p JOIN customers c ON p.customerID = c.customerID";
 
         try (Connection con = newsql.getConnection()){
+
+            boolean drugPurchaseTableExists = tableExists(con, "PURCHASES");
+
+            if(!drugPurchaseTableExists){
+                String creatTable = "Create table PURCHASES (purchaseId int primary key auto_increment, drugName varchar(100), drugQuantity varchar(100), drugPrice varchar(100), purchaseDate varchar(100), customerId int)";
+                Statement statement = con.createStatement();
+                statement.executeUpdate(creatTable);
+            }
+
                 PreparedStatement pds = con.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 ResultSet rs = pds.executeQuery();
 
@@ -69,10 +90,7 @@ public class RetrieveData {
                             rs.getString("customerID")
                     );
                     purchaseList.add(newPurchase);
-
-
-
-}
+    }
         } catch (SQLException e){
             myErrorHandler.getSQLException(e);
         }
@@ -87,6 +105,16 @@ public class RetrieveData {
         String query = "SELECT * FROM SUPPLIERS";
 
         try (Connection con = newsql.getConnection()){
+
+            boolean suppliersTableExists = tableExists(con, "SUPPLIERS");
+
+            if(!suppliersTableExists){
+                String creatTable = "Create table SUPPLIERS (supplierId int primary key auto_increment, supplierName varchar(100), supplierLocation varchar(100), supplierPhone varchar(100))";
+                Statement statement = con.createStatement();
+                statement.executeUpdate(creatTable);
+            }
+
+
             PreparedStatement ps = con.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = ps.executeQuery();
 
@@ -111,6 +139,20 @@ public class RetrieveData {
     public ObservableList<DrugAndSupplier> getAllDrugSupplier() throws SQLException, ClassNotFoundException {
         ObservableList<DrugAndSupplier> drugAndSupplierList = null;
         try (Connection con = newsql.getConnection()) {
+
+            boolean drugSupplierTableExists = tableExists(con, "DRUGSUPPLIER");
+
+            if(!drugSupplierTableExists){
+                String creatTable = "CREATE TABLE drugSupplier (" +
+                        "drugID INT, " +
+                        "supplierID INT, " +
+                        "PRIMARY KEY (drugID, supplierID), " +
+                        "FOREIGN KEY (drugID) REFERENCES drugs(drugID), " +
+                        "FOREIGN KEY (supplierID) REFERENCES suppliers(supplierID)) ";
+                Statement statement = con.createStatement();
+                statement.executeUpdate(creatTable);
+            }
+
             drugAndSupplierList = FXCollections.observableArrayList();
             String query = "SELECT d.drugID, s.supplierID, d.drugName, s.supplierName, s.supplierLocation, d.drugDescription, s.supplierPhone FROM DrugSupplier ds JOIN Drugs d ON ds.DrugID = d.DRUGID JOIN Suppliers s ON ds.SupplierID = s.supplierID";
 

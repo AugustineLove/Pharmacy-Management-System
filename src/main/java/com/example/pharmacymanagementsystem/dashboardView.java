@@ -344,11 +344,14 @@ public static ObservableList<Supplier> updatedListOfSuppliers;
 
     public void showTableData(ObservableList<Drug> list) throws SQLException, ClassNotFoundException {
         ObservableList<Drug> drugDataList = retrieveData.getAllDrugs();
-        int lastIn = Integer.parseInt(drugDataList.getLast().getDrugID());
-        int showLastIn = lastIn + 1;
-        int nextDrugId = drugDataList.size() + 1;
-        String newDrugIdS = String.valueOf(nextDrugId);
+        int showLastIn = 1;
+
+        if (!drugDataList.isEmpty()) {
+            int lastIn = Integer.parseInt(drugDataList.get(drugDataList.size() - 1).getDrugID());
+            showLastIn = lastIn + 1;
+        }
         addDrug_id.setText(String.valueOf(showLastIn));
+
 
         addDrug_col_id.setCellValueFactory(new PropertyValueFactory<>("drugID"));
         addDrug_col_name.setCellValueFactory(new PropertyValueFactory<>("drugName"));
@@ -361,8 +364,11 @@ public static ObservableList<Supplier> updatedListOfSuppliers;
 
     public void showPurchaseTableData(ObservableList<Purchase> list) throws SQLException, ClassNotFoundException {
         ObservableList<Purchase> drugDataList = retrieveData.getAllDrugPurchases();
-        int lastIn = Integer.parseInt(drugDataList.getLast().getPurchaseId());
-        int showLastIn = lastIn + 1;
+        int showLastIn = 1;
+        if (!drugDataList.isEmpty()) {
+            int lastIn = Integer.parseInt(drugDataList.get(drugDataList.size() - 1).getPurchaseId());
+            showLastIn = lastIn + 1;
+        }
         purchases_addDrugID.setText(String.valueOf(showLastIn));
 
 
@@ -378,8 +384,12 @@ public static ObservableList<Supplier> updatedListOfSuppliers;
     public void showSupplierTableData(ObservableList<Supplier> list) throws SQLException, ClassNotFoundException {
 
         ObservableList<Supplier> supplierDataList = retrieveData.getAllSuppliers();
-        int lastIn = Integer.parseInt(supplierDataList.getLast().getSupplierID());
-        int showLastIn = lastIn + 1;
+        int showLastIn = 1;
+
+        if (!supplierDataList.isEmpty()) {
+            int lastIn = Integer.parseInt(supplierDataList.get(supplierDataList.size() - 1).getSupplierID());
+            showLastIn = lastIn + 1;
+        }
         String newSupplierId = String.valueOf(showLastIn);
         supplierAdd_ID.setText(newSupplierId);
 
