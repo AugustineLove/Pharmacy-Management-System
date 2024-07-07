@@ -1,6 +1,6 @@
 package com.example.pharmacymanagementsystem.utils;
 
-import com.example.pharmacymanagementsystem.dashboardView;
+import com.example.pharmacymanagementsystem.controllers.DashboardController;
 import databaseConnection.MyDatabase;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
@@ -14,6 +14,15 @@ public class DeleteData {
 
     MyDatabase myDb = new MyDatabase();
     AlertDialogue alertDialogue = new AlertDialogue();
+
+    /**
+     * Deletes the data of a drug from the database based on the given drug ID.
+     *
+     * @param drugId The TextField containing the drug ID to be deleted.
+     * @throws SQLException           If a database access error occurs.
+     * @throws ClassNotFoundException If the JDBC driver class is not found.
+     */
+
     public void deleteDrugData(TextField drugId) throws SQLException, ClassNotFoundException {
 
 
@@ -29,7 +38,7 @@ public class DeleteData {
             if(result.get() == ButtonType.OK){
                 st.executeUpdate(deleteQuery);
                 RetrieveData retrieveData = new RetrieveData();
-                dashboardView.newUpdateListOfDrugs = retrieveData.getAllDrugs();
+                DashboardController.newUpdateListOfDrugs = retrieveData.getAllDrugs();
                 retrieveData.getAllDrugs();
                 alertDialogue.showSuccessAlert("Record deleted successfully!");
             }
@@ -39,6 +48,14 @@ public class DeleteData {
         }
 
     }
+
+    /**
+     * Deletes the purchase data of a drug from the database based on the given purchase ID.
+     *
+     * @param purchaseId The TextField containing the purchase ID to be deleted.
+     * @throws SQLException           If a database access error occurs.
+     * @throws ClassNotFoundException If the JDBC driver class is not found.
+     */
 
     public void deleteDrugPurchaseData(TextField purchaseId) throws SQLException, ClassNotFoundException {
 
@@ -55,7 +72,7 @@ public class DeleteData {
             if(result.get() == ButtonType.OK){
                 st.executeUpdate(deleteQuery);
                 RetrieveData retrieveData = new RetrieveData();
-                dashboardView.updateListOfPurchases = retrieveData.getAllDrugPurchases();
+                DashboardController.updateListOfPurchases = retrieveData.getAllDrugPurchases();
                 retrieveData.getAllDrugPurchases();
                 alertDialogue.showSuccessAlert("Record deleted successfully!");
 
@@ -67,6 +84,14 @@ public class DeleteData {
         }
     }
 
+    /**
+     * Deletes the data of a supplier from the database based on the given supplier ID.
+     *
+     * @param supplierID   The TextField containing the supplier ID to be deleted.
+     * @param supplierName The TextField containing the supplier name.
+     * @throws SQLException           If a database access error occurs.
+     * @throws ClassNotFoundException If the JDBC driver class is not found.
+     */
 
     public void deleteSupplierData(TextField supplierID, TextField supplierName) throws SQLException, ClassNotFoundException {
 
@@ -82,7 +107,7 @@ public class DeleteData {
             if(result.get() == ButtonType.OK){
                 st.executeUpdate(deleteQuery);
                 RetrieveData retrieveData = new RetrieveData();
-                dashboardView.updatedListOfSuppliers = retrieveData.getAllSuppliers();
+                DashboardController.updatedListOfSuppliers = retrieveData.getAllSuppliers();
                 retrieveData.getAllSuppliers();
                 alertDialogue.showSuccessAlert("Record deleted successfully!");
             }

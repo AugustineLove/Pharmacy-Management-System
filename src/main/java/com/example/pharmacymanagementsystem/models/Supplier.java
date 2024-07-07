@@ -1,5 +1,9 @@
 package com.example.pharmacymanagementsystem.models;
 
+/**
+ *
+ */
+
 public class Supplier {
     private String supplierID;
     private String supplierName;

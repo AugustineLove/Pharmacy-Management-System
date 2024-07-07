@@ -4,6 +4,12 @@ import java.sql.SQLException;
 
 public class ErrorHandler {
 
+    /**
+     * Handles and prints details of an SQL exception.
+     *
+     * @param exception The SQLException that occurred.
+     */
+
     public void getSQLException(SQLException exception) {
 
         for(Throwable e: exception) {
@@ -22,6 +28,13 @@ public class ErrorHandler {
             }
         }
     }
+
+    /**
+     * Determines whether an SQL exception should be ignored based on its SQL state.
+     *
+     * @param sqlState The SQL state of the exception.
+     * @return true if the SQL state indicates that the exception should be ignored, false otherwise.
+     */
 
     public static boolean ignoreSQLException(String sqlState) {
         if(sqlState.equals("")){

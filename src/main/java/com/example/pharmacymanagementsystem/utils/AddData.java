@@ -1,6 +1,6 @@
 package com.example.pharmacymanagementsystem.utils;
 
-import com.example.pharmacymanagementsystem.dashboardView;
+import com.example.pharmacymanagementsystem.controllers.DashboardController;
 import databaseConnection.MyDatabase;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -51,7 +51,7 @@ public class AddData {
 
                     appConstants.resetInputRecords(drugId, drugName, drugDescription, stock, suppliers, newDrugID);
                     RetrieveData retrieveData = new RetrieveData();
-                    dashboardView.newUpdateListOfDrugs = retrieveData.getAllDrugs();
+                    DashboardController.newUpdateListOfDrugs = retrieveData.getAllDrugs();
                     retrieveData.getAllDrugs();
 
                     alertDialogue.showSuccessAlert("Record added successfully!");
@@ -133,9 +133,9 @@ public class AddData {
 
                 appConstants.resetPInputRecords(drugName, drugQuantity, drugPrice, datePicker);
                 RetrieveData retrieveData = new RetrieveData();
-                dashboardView.updateListOfPurchases = retrieveData.getAllDrugPurchases();
+                DashboardController.updateListOfPurchases = retrieveData.getAllDrugPurchases();
                 retrieveData.getAllDrugPurchases();
-                dashboardView.newUpdateListOfDrugs = retrieveData.getAllDrugs();
+                DashboardController.newUpdateListOfDrugs = retrieveData.getAllDrugs();
 
                 alertDialogue.showSuccessAlert("Record added successfully!");
             } else{
@@ -160,9 +160,9 @@ public class AddData {
 
                 appConstants.resetPInputRecords(drugName, drugQuantity, drugPrice, datePicker);
                 RetrieveData retrieveData = new RetrieveData();
-                dashboardView.updateListOfPurchases = retrieveData.getAllDrugPurchases();
+                DashboardController.updateListOfPurchases = retrieveData.getAllDrugPurchases();
                 retrieveData.getAllDrugPurchases();
-                dashboardView.newUpdateListOfDrugs = retrieveData.getAllDrugs();
+                DashboardController.newUpdateListOfDrugs = retrieveData.getAllDrugs();
 
                 alertDialogue.showSuccessAlert("Record added successfully!");
             }
@@ -199,7 +199,7 @@ public class AddData {
 
                 appConstants.resetSupplierInputRecords(supplierId, supplierName, supplierLocation, supplierPhone, newSupplierID);
                 RetrieveData retrieveData = new RetrieveData();
-                dashboardView.updatedListOfSuppliers = retrieveData.getAllSuppliers();
+                DashboardController.updatedListOfSuppliers = retrieveData.getAllSuppliers();
                 retrieveData.getAllDrugs();
 
                 alertDialogue.showSuccessAlert("Record added successfully!");
@@ -258,7 +258,7 @@ public class AddData {
                 pstmt.setInt(2, supplierId);
                 pstmt.executeUpdate();
                 appConstants.resetDrugSupplierRecords(drugName, supplierName, supplierLocation);
-                dashboardView.updatedListOfDrugsAndSuppliers = retrieveData.getAllDrugSupplier();
+                DashboardController.updatedListOfDrugsAndSuppliers = retrieveData.getAllDrugSupplier();
                 retrieveData.getAllDrugs();
                 alertDialogue.showSuccessAlert("Record added successfully!");
             }

@@ -1,4 +1,4 @@
-package com.example.pharmacymanagementsystem;
+package com.example.pharmacymanagementsystem.controllers;
 
 import com.example.pharmacymanagementsystem.models.*;
 import com.example.pharmacymanagementsystem.utils.*;
@@ -16,7 +16,7 @@ import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
 
-public class dashboardView {
+public class DashboardController {
 
     @FXML
     private Button addDrug_addBtn;

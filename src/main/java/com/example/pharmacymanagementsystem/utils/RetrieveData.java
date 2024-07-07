@@ -1,6 +1,6 @@
 package com.example.pharmacymanagementsystem.utils;
 
-import com.example.pharmacymanagementsystem.dashboardView;
+import com.example.pharmacymanagementsystem.controllers.DashboardController;
 import com.example.pharmacymanagementsystem.models.Drug;
 import com.example.pharmacymanagementsystem.models.DrugAndSupplier;
 import com.example.pharmacymanagementsystem.models.Purchase;
@@ -14,7 +14,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.sql.*;
-import java.util.Random;
+
+
 
 public class RetrieveData {
 
@@ -26,6 +27,13 @@ public class RetrieveData {
         ResultSet resultSet = meta.getTables(null, null, tableName, new String[] {"TABLE"});
         return resultSet.next();
     }
+
+    /**
+     * This method query through the database and return all available drug records
+     * @return ObservableList
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
 
     public ObservableList<Drug> getAllDrugs() throws SQLException, ClassNotFoundException {
         ObservableList<Drug> drugList = FXCollections.observableArrayList();
@@ -59,9 +67,16 @@ public class RetrieveData {
         } catch (SQLException e){
             myErrorHandler.getSQLException(e);
         }
-        dashboardView.newUpdateListOfDrugs = drugList;
+        DashboardController.newUpdateListOfDrugs = drugList;
         return drugList;
     };
+
+    /**
+     * This get all the data in the DrugPurchase table where each purchase is linked to a particular drug
+     * @return ObservableList
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
 
     public ObservableList<Purchase> getAllDrugPurchases() throws SQLException, ClassNotFoundException {
         ObservableList<Purchase> purchaseList = FXCollections.observableArrayList();
@@ -95,10 +110,17 @@ public class RetrieveData {
             myErrorHandler.getSQLException(e);
         }
 
-        dashboardView.updateListOfPurchases = purchaseList;
+        DashboardController.updateListOfPurchases = purchaseList;
         return purchaseList;
     };
 
+
+    /**
+     * This method fetches all suppliers in the database
+     * @return ObservableList
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
 
     public ObservableList<Supplier> getAllSuppliers() throws SQLException, ClassNotFoundException {
         ObservableList<Supplier> supplierList = FXCollections.observableArrayList();
@@ -131,11 +153,16 @@ public class RetrieveData {
         } catch (SQLException e){
             myErrorHandler.getSQLException(e);
         }
-        dashboardView.updatedListOfSuppliers = supplierList;
+        DashboardController.updatedListOfSuppliers = supplierList;
         return supplierList;
     };
 
-
+    /**
+     * This method returns all drugs linked to the suppliers
+     * @return ObservableList
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public ObservableList<DrugAndSupplier> getAllDrugSupplier() throws SQLException, ClassNotFoundException {
         ObservableList<DrugAndSupplier> drugAndSupplierList = null;
         try (Connection con = newsql.getConnection()) {
@@ -175,6 +202,10 @@ public class RetrieveData {
         return drugAndSupplierList;
     }
 
+    /**
+     * This method shows a visualized view report of drugs in relation to their various stock amounts
+     * @params
+     */
     public void generateReport() {
         Stage reportStage = new Stage();
         reportStage.setTitle("Drug Stock Report");
