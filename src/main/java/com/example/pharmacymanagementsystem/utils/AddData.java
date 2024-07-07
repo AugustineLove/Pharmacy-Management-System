@@ -1,5 +1,6 @@
 package com.example.pharmacymanagementsystem.utils;
 
+
 import com.example.pharmacymanagementsystem.controllers.DashboardController;
 import databaseConnection.MyDatabase;
 import javafx.scene.control.DatePicker;
@@ -8,6 +9,7 @@ import javafx.scene.control.TextField;
 import java.sql.*;
 import java.util.Random;
 
+
 public class AddData {
     AlertDialogue alertDialogue = new AlertDialogue();
     MyDatabase myDatabase = new MyDatabase();
@@ -15,6 +17,18 @@ public class AddData {
     AppConstants appConstants = new AppConstants();
     RetrieveData retrieveData = new RetrieveData();
 
+    /**
+     * Adds a new drug record to the database.
+     *
+     * @param drugId the text field containing the drug ID
+     * @param drugName the text field containing the drug name
+     * @param drugDescription the text field containing the drug description
+     * @param stock the text field containing the drug stock
+     * @param suppliers the text field containing the supplier name
+     * @param newDrugID the new drug ID to be assigned
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the JDBC driver class is not found
+     */
     public void addDrugData(TextField drugId, TextField drugName, TextField drugDescription, TextField stock, TextField suppliers, String newDrugID) throws SQLException, ClassNotFoundException {
         String query = "INSERT INTO DRUGS " + "(DrugName, DrugDescription, DrugStock, DrugSupplier, SupplierID)" +"VALUES(?,?,?,?,?)";
 
@@ -22,11 +36,11 @@ public class AddData {
         try (Connection con = myDatabase.getConnection()){
 
             if(drugId.getText().isEmpty() || drugName.getText().isEmpty() || drugDescription.getText().isEmpty()
-            || stock.getText().isEmpty() || suppliers.getText().isEmpty()){
+                    || stock.getText().isEmpty() || suppliers.getText().isEmpty()){
                 alertDialogue.showErrorAlert("Please provide value for all fields");
             }
-          else{
-              String checkQuery = "SELECT DRUGID FROM DRUGS WHERE DRUGID = '"+  drugId.getText()+"'";
+            else{
+                String checkQuery = "SELECT DRUGID FROM DRUGS WHERE DRUGID = '"+  drugId.getText()+"'";
                 String getSupplierID = "Select supplierID from suppliers where supplierName = '" + suppliers.getText() + "'";
                 String supplierID = "";
 
@@ -69,6 +83,15 @@ public class AddData {
         }
     }
 
+    /**
+     * Checks if a customer exists in the database based on the given customer ID.
+     *
+     * @param customerID the ID of the customer to check
+     * @return {@code true} if the customer exists, {@code false} otherwise
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the JDBC driver class is not found
+     */
+
     public boolean isCustomer( int customerID) throws SQLException, ClassNotFoundException {
         String checkCustomer = "Select * from customers where customerID = '" + customerID + "'";
         try (Connection con = myDatabase.getConnection()){
@@ -80,6 +103,15 @@ public class AddData {
         }
         return false;
     }
+
+    /**
+     * Updates the stock of a specific drug in the database by reducing the stock by the purchased amount.
+     *
+     * @param drugName the text field containing the name of the drug
+     * @param purchasedStock the amount of stock that has been purchased
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the JDBC driver class is not found
+     */
 
     public void updateStock(TextField drugName, int purchasedStock) throws SQLException, ClassNotFoundException {
         String stockQuery = "Select drugStock from drugs where drugName = '" + drugName.getText() + "'";
@@ -105,7 +137,16 @@ public class AddData {
     }
 
 
-
+    /**
+     * Adds a new drug purchase record to the database. If the customer does not exist, a new customer is created.
+     *
+     * @param drugName the text field containing the name of the drug
+     * @param drugQuantity the text field containing the quantity of the drug purchased
+     * @param drugPrice the text field containing the price of the drug
+     * @param datePicker the date picker containing the purchase date
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the JDBC driver class is not found
+     */
     public void addDrugPurchase(TextField drugName, TextField drugQuantity, TextField drugPrice, DatePicker datePicker) throws SQLException, ClassNotFoundException {
 
         try(Connection con = myDatabase.getConnection()){
@@ -171,13 +212,25 @@ public class AddData {
         }
     }
 
+    /**
+     * Adds a new supplier record to the database.
+     *
+     * @param supplierId the text field containing the supplier ID
+     * @param supplierName the text field containing the supplier name
+     * @param supplierLocation the text field containing the supplier location
+     * @param supplierPhone the text field containing the supplier phone number
+     * @param newSupplierID the new supplier ID to be assigned
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the JDBC driver class is not found
+     */
+
     public void addSupplierData(TextField supplierId, TextField supplierName, TextField supplierLocation, TextField supplierPhone, String newSupplierID) throws SQLException, ClassNotFoundException {
         String query = "INSERT INTO SUPPLIERS " + "(Name, Location)" +"VALUES(?,?)";
 
         try (Connection con = myDatabase.getConnection()){
 
             if(supplierId.getText().isEmpty() || supplierName.getText().isEmpty() || supplierLocation.getText().isEmpty()
-                   ){
+            ){
                 alertDialogue.showErrorAlert("Please provide value for all fields");
             }
             else{
@@ -209,6 +262,17 @@ public class AddData {
         }
     }
 
+    /**
+     * Retrieves the supplier ID from the database based on the supplier's name and location.
+     *
+     * @param drugName the text field containing the drug name (not used in the query)
+     * @param supplierName the text field containing the supplier name
+     * @param supplierLocation the text field containing the supplier location
+     * @return the supplier ID if found, otherwise returns 0
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the JDBC driver class is not found
+     */
+
     private int getSupplierID(TextField drugName, TextField supplierName, TextField supplierLocation) throws SQLException, ClassNotFoundException {
         String query = "SELECT supplierID from SUPPLIERS WHERE supplierName = '" + supplierName.getText() + "' AND supplierLocation = '" + supplierLocation.getText() + "'";
         int supplierId = 0;
@@ -221,6 +285,15 @@ public class AddData {
         }
         return supplierId;
     }
+
+    /**
+     * Retrieves the drug ID from the database based on the drug's name.
+     *
+     * @param drugName the text field containing the name of the drug
+     * @return the drug ID if found, otherwise returns 0
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the JDBC driver class is not found
+     */
     private int getDrugID(TextField drugName) throws SQLException, ClassNotFoundException {
         String drugIDQuery = "SELECT DRUGID from DRUGS WHERE drugName = '"+ drugName.getText() +"'";
         int drugID = 0;
@@ -234,6 +307,16 @@ public class AddData {
         System.out.println("This is the drug ID: " + drugID);
         return drugID;
     }
+
+    /**
+     * Adds a new record to the DrugSupplier table, linking a drug with a supplier.
+     *
+     * @param drugName the text field containing the name of the drug
+     * @param supplierName the text field containing the name of the supplier
+     * @param supplierLocation the text field containing the location of the supplier
+     * @throws SQLException if a database access error occurs
+     * @throws ClassNotFoundException if the JDBC driver class is not found
+     */
 
     public void addDrugSupplier(TextField drugName, TextField supplierName, TextField supplierLocation) throws SQLException, ClassNotFoundException {
 
