@@ -463,7 +463,6 @@ public static ObservableList<Supplier> updatedListOfSuppliers;
     }
     public void showPage(ActionEvent event){
 
-
         if(event.getSource() == drugs_btn){
             drugs_page.setVisible(true);
             purchases_page.setVisible(false);
@@ -510,11 +509,9 @@ public static ObservableList<Supplier> updatedListOfSuppliers;
 
     }
 
-
     public void clearFormInput() throws SQLException, ClassNotFoundException{
         ObservableList<Drug> drugDataList = retrieveData.getAllDrugs();
         int nextDrugId = drugDataList.size() + 1;
-
         int lastIn = Integer.parseInt(drugDataList.getLast().getDrugID());
         int showLastIn = lastIn + 1;
         String newDrugIdS = String.valueOf(nextDrugId);
