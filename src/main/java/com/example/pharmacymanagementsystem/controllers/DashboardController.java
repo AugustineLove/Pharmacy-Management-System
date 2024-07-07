@@ -558,7 +558,7 @@ public static ObservableList<Supplier> updatedListOfSuppliers;
     public void addSupplier() throws SQLException, ClassNotFoundException {
         ObservableList<Supplier> supplierListData = retrieveData.getAllSuppliers();
         int nextSupplierId = supplierListData.size() + 1;
-        int lastIn = Integer.parseInt(supplierListData.getLast().getSupplierID());
+        int lastIn = (supplierListData.isEmpty()) ? 0 : Integer.parseInt(supplierListData.getLast().getSupplierID());
         int showLastIn = lastIn + 1;
         String newSupplierId = String.valueOf(showLastIn);
         addData.addSupplierData(supplierAdd_ID, supplierAdd_Name, supplierAdd_Location, supplierAdd_Phone, newSupplierId);

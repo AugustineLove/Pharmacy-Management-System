@@ -225,7 +225,7 @@ public class AddData {
      */
 
     public void addSupplierData(TextField supplierId, TextField supplierName, TextField supplierLocation, TextField supplierPhone, String newSupplierID) throws SQLException, ClassNotFoundException {
-        String query = "INSERT INTO SUPPLIERS " + "(Name, Location)" +"VALUES(?,?)";
+        String query = "INSERT INTO SUPPLIERS " + "(supplierName, supplierLocation, supplierPhone)" +"VALUES(?,?,?)";
 
         try (Connection con = myDatabase.getConnection()){
 
@@ -246,6 +246,7 @@ public class AddData {
 
                 ps.setString(1, supplierName.getText());
                 ps.setString(2, supplierLocation.getText());
+                ps.setString(3, supplierPhone.getText());
                 ps.executeUpdate();
 
                 AppConstants appConstants = new AppConstants();
